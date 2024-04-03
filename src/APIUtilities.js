@@ -1,7 +1,11 @@
-const getLocationData = async (location) => {
+const API_KEY = "243eecaa621a7c5bbe4b86f7bc268e9e";
+
+const searchLocationData = async (location) => {
     /**
      * API Key from nico9506 user, Openweathermap
-     * string 'location' --> {city name},{state code},{country code}
+     *
+     * @param {location} 'location' --> {city name},{state code},{country code}
+     *
      * Documentation: https://openweathermap.org/current#one
      *
      * q 	(required) 	City name, state code (only for the US) and country code divided by comma. Please use ISO 3166 country codes.
@@ -9,14 +13,11 @@ const getLocationData = async (location) => {
      * appid 	(required) 	Your unique API key (you can always find it on your account page under the "API key" tab)
      * limit 	(optional) 	Number of the locations in the API response (up to 5 results can be returned in the API response)
      *
+     * @returns {Promise} object with the city coordinates
      */
 
-    // const response = await fetch(
-    //     `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=&units=${units}`
-    // );
-
     const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=243eecaa621a7c5bbe4b86f7bc268e9e`
+        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${API_KEY}`
     );
     try {
         const data = await response.json();
@@ -27,7 +28,17 @@ const getLocationData = async (location) => {
 };
 
 export const getCoordinatesFromCityName = async (loc) => {
-    const data = await getLocationData(loc);
+    /**
+     * Get coordinates values from a city name
+     *
+     * @param {string} loc {city name}, {state}, {country code}
+     *
+     * Documentation: https://openweathermap.org/api/geocoding-api
+     *
+     * @returns {Object} object with the city coordinates
+     */
+
+    const data = await searchLocationData(loc);
     const lon = data[0].lon;
     const lat = data[0].lat;
     // console.log(data);
@@ -37,16 +48,20 @@ export const getCoordinatesFromCityName = async (loc) => {
 
 const searchCity = async (lon, lat) => {
     /**
+     * Search a city info from its coordinates.
+     *
      * API Key from nico9506 user, Openweathermap
-     * 'lat' --> latitude
-     * 'lon' --> longitude
+     *
+     * @param {number} lon longitude value
+     * @param {number} lat latitude value
+     *
      * Documentation: https://openweathermap.org/api/geocoding-api
      *
-     * Change the 'location' HTML for a string compound by the city and country names.
+     * @returns {Promise} object with the city info
      */
 
     const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=243eecaa621a7c5bbe4b86f7bc268e9e`
+        `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&${API_KEY}`
     );
     try {
         const data = await response.json();
@@ -57,12 +72,80 @@ const searchCity = async (lon, lat) => {
 };
 
 export const getLocationFromCoordinates = async (lon, lat) => {
+    /**
+     * Get a city info from its coordinates.
+     *
+     * API Key from nico9506 user, Openweathermap
+     *
+     * @param {number} lon longitude value
+     * @param {number} lat latitude value
+     *
+     * Documentation: https://openweathermap.org/api/geocoding-api
+     *
+     * @returns {Object} object with the city info {name, state, country}
+     */
+
     const data = await searchCity(lon, lat);
     const name = data[0].name;
     const state = data[0].state;
     const country = data[0].country;
     // console.log(data);
     return { name, state, country };
+};
+
+const requestWeatherInfo = async (lon, lat, units = "metric") => {
+    /**
+     * Request weather information from a city coordinates
+     *
+     * API Key from nico9506 user, Openweathermap
+     *
+     * @param {number} lon longitude value
+     * @param {number} lat latitude value
+     *
+     * Documentation: https://openweathermap.org/api/geocoding-api
+     *
+     * lat 	(required) 	Latitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
+     * lon 	(required) 	Longitude. If you need the geocoder to automatic convert city names and zip-codes to geo coordinates and the other way around, please use our Geocoding API
+     * appid 	(required) 	Your unique API key (you can always find it on your account page under the "API key" tab)
+     * mode 	(optional) 	Response format. Possible values are xml and html. If you don't use the mode parameter format is JSON by default. Learn more
+     * units 	(optional) 	Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.
+     * lang 	(optional) 	You can use this parameter to get the output in your language. Learn more
+     *
+     * @returns {Promise} object with the city weather info
+     */
+
+    const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${units}`
+    );
+
+    try {
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error(response.status);
+    }
+};
+
+export const getWeatherInfo = async (lon, lat, units = "metric") => {
+    /**
+     * Get a city weather info from its coordinates.
+     *
+     * API Key from nico9506 user, Openweathermap
+     *
+     * @param {number} lon longitude value
+     * @param {number} lat latitude value
+     *
+     * Documentation: https://openweathermap.org/api/geocoding-api
+     *
+     * @returns {Object} object with the city weather info {}
+     */
+
+    const data = await requestWeatherInfo(lon, lat, units);
+    // const name = data[0].name;
+    // const state = data[0].state;
+    // const country = data[0].country;
+    console.log(data);
+    // return { name, state, country };
 };
 
 const unixToDate = (unixTimestamp) => {
