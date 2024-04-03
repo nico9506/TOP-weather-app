@@ -17,7 +17,7 @@ const searchLocationData = async (location) => {
      */
 
     const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${API_KEY}`,
+        `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${API_KEY}`,
         { mode: "cors" }
     );
     try {
@@ -62,7 +62,7 @@ const searchCity = async (lon, lat) => {
      */
 
     const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_KEY}`,
+        `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_KEY}`,
         { mode: "cors" }
     );
     try {
