@@ -1,18 +1,5 @@
 import { updateWeatherOnScreen } from "./model";
-
-// export function sayHelloWorld() {
-//     /**
-//      * Dummy function to print Hello world and check webpack is well configured.
-//      */
-//     const msg = document.createElement("h1");
-//     msg.textContent = "Hello World!";
-
-//     // console.log(getCoordinatesFromCityName("melbourne, AU"));
-//     // console.log(getLocationFromCoordinates(144.9633, -37.814));
-//     // console.log(getWeatherInfo(144.9633, -37.814));
-
-//     return msg;
-// }
+import githubIcon from "./assets/github.svg";
 
 export const createInputForm = () => {
     /**
@@ -73,4 +60,34 @@ export const createOutputFields = () => {
     container.appendChild(currentTemperature);
 
     return container;
+};
+
+export const createFooter = () => {
+    /**
+     * Creates the footer element and returns the HTML element
+     */
+    const GITHUB_USER = "nico9506";
+    const GITHUB_REPO_URL = "https://github.com/nico9506/TOP-weather-app";
+
+    const footer = document.createElement("footer");
+
+    // DIV to keep together the GitHub logo and the username
+    const githubLink = document.createElement("a");
+    githubLink.classList.add("github-contact-info");
+    githubLink.href = GITHUB_REPO_URL;
+
+    const logo = new Image();
+    logo.src = githubIcon;
+    logo.classList.add("footer-logo");
+    githubLink.appendChild(logo);
+
+    const githubUser = document.createElement("h1");
+    githubUser.classList.add("github-user");
+    githubUser.id = "githubUser";
+    githubUser.textContent = GITHUB_USER;
+    githubLink.appendChild(githubUser);
+
+    footer.appendChild(githubLink);
+
+    return footer;
 };

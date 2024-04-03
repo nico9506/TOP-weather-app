@@ -50,8 +50,73 @@
     color: var(--ct-darker);
 }
 
-/* --------------------- Section -------------------- */
-/* --------------------- Section -------------------- */
+body {
+    background-color: var(--ct-light);
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
+    height: 100vh;
+}
+
+/* --------------------- Form Container -------------------- */
+.form-container {
+    margin-top: 2rem;
+    text-align: center;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    width: 100%;
+    height: min(30%, 10rem);
+}
+
+/* --------------------- Weather Container -------------------- */
+.weather-container {
+    width: 100%;
+    height: max(70%, 10rem);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+/* --------------------- Footer -------------------- */
+footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--ct-darker);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer > .github-contact-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+footer > .github-contact-info > .footer-logo {
+    width: var(--logo-fs);
+    filter: var(--filter-numix);
+}
+
+footer > .github-contact-info > .github-user {
+    font-size: var(--logo-fs);
+    color: var(--ct-light);
+}
+
+footer > .github-contact-info > .github-user:hover {
+    color: var(--ct-numix);
+}
 /* --------------------- Section -------------------- */
 /* --------------------- Section -------------------- */
 
