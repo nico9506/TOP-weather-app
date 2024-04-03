@@ -43,7 +43,7 @@ export const getCoordinatesFromCityName = async (loc) => {
     const lat = data[0].lat;
     // console.log(data);
     // console.log(lon, lat);
-    return { lon, lat };
+    return { lon: lon, lat: lat };
 };
 
 const searchCity = async (lon, lat) => {
@@ -61,7 +61,7 @@ const searchCity = async (lon, lat) => {
      */
 
     const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&${API_KEY}`
+        `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_KEY}`
     );
     try {
         const data = await response.json();
@@ -141,11 +141,8 @@ export const getWeatherInfo = async (lon, lat, units = "metric") => {
      */
 
     const data = await requestWeatherInfo(lon, lat, units);
-    // const name = data[0].name;
-    // const state = data[0].state;
-    // const country = data[0].country;
-    console.log(data);
-    // return { name, state, country };
+    // console.log(data);
+    return data;
 };
 
 const unixToDate = (unixTimestamp) => {
@@ -196,17 +193,3 @@ const degreesToDirection = (degrees) => {
 
     return "";
 };
-
-/**
- * For testing purposes only
- */
-
-// printWeather = () => {
-//     console.log(appElements.getCityName(), appElements.getTemperature());
-// };
-
-//First call to display info. Should be change to user current location
-// APIUtilities().updateWeather("Melbourne, AU");
-// lon: -80.6081, lat: 28.0836
-
-// * string 'units' --> standard, metric and imperial

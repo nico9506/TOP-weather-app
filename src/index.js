@@ -1,4 +1,4 @@
-import { sayHelloWorld } from "./home";
+import { createInputForm, createOutputFields, sayHelloWorld } from "./home";
 import "./style.css";
 
 (function generateWebPage() {
@@ -8,5 +8,6 @@ import "./style.css";
 
     const body = document.body;
 
-    body.appendChild(sayHelloWorld());
+    body.appendChild(createInputForm());
+    body.appendChild(createOutputFields());
 })();
