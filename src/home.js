@@ -75,6 +75,7 @@ export const createFooter = () => {
     const githubLink = document.createElement("a");
     githubLink.classList.add("github-contact-info");
     githubLink.href = GITHUB_REPO_URL;
+    githubLink.target = "_blank";
 
     const logo = new Image();
     logo.src = githubIcon;
