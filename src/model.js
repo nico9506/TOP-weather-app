@@ -7,7 +7,7 @@ import {
 export const updateWeatherOnScreen = async (event) => {
     event.preventDefault();
 
-    const search = document.getElementById("search_val");
+    const search = document.getElementById("input_city").value;
     const city = document.getElementById("city_title");
     const temp = document.getElementById("current_temp");
 
@@ -20,7 +20,7 @@ export const updateWeatherOnScreen = async (event) => {
     city.textContent = `${cityLoc.name}, ${cityLoc.state}, ${cityLoc.country}`;
 
     const cityInfo = await getWeatherInfo(cityCoord.lon, cityCoord.lat);
-    temp.textContent = `Current temperature ${cityInfo.main.temp} C`;
+    temp.textContent = `Current temperature: ${cityInfo.main.temp} C`;
 
     console.log(cityInfo);
 };
