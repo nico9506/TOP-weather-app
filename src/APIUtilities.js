@@ -1,12 +1,22 @@
-const getLocationData = async (location, units = "metric") => {
+const getLocationData = async (location) => {
     /**
      * API Key from nico9506 user, Openweathermap
      * string 'location' --> {city name},{state code},{country code}
-     * string 'units' --> standard, metric and imperial
      * Documentation: https://openweathermap.org/current#one
+     *
+     * q 	(required) 	City name, state code (only for the US) and country code divided by comma. Please use ISO 3166 country codes.
+     *
+     * appid 	(required) 	Your unique API key (you can always find it on your account page under the "API key" tab)
+     * limit 	(optional) 	Number of the locations in the API response (up to 5 results can be returned in the API response)
+     *
      */
+
+    // const response = await fetch(
+    //     `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=&units=${units}`
+    // );
+
     const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=243eecaa621a7c5bbe4b86f7bc268e9e&units=${units}`
+        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=243eecaa621a7c5bbe4b86f7bc268e9e`
     );
     try {
         const data = await response.json();
@@ -18,8 +28,8 @@ const getLocationData = async (location, units = "metric") => {
 
 export const getCoordinatesFromCityName = async (loc) => {
     const data = await getLocationData(loc);
-    const lon = data.coord.lon;
-    const lat = data.coord.lat;
+    const lon = data[0].lon;
+    const lat = data[0].lat;
     // console.log(data);
     // console.log(lon, lat);
     return { lon, lat };
@@ -115,3 +125,5 @@ const degreesToDirection = (degrees) => {
 //First call to display info. Should be change to user current location
 // APIUtilities().updateWeather("Melbourne, AU");
 // lon: -80.6081, lat: 28.0836
+
+// * string 'units' --> standard, metric and imperial

@@ -10,8 +10,8 @@ export function sayHelloWorld() {
     const msg = document.createElement("h1");
     msg.textContent = "Hello World!";
 
-    // console.log(getCoordinatesFromCityName("melbourne, AU"));
-    console.log(getLocationFromCoordinates(144.9633, -37.814));
+    console.log(getCoordinatesFromCityName("melbourne, AU"));
+    // console.log(getLocationFromCoordinates(144.9633, -37.814));
 
     return msg;
 }
